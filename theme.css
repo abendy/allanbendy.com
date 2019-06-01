@@ -23,79 +23,50 @@ a {
     line-height: 1.7;
 }
 
-a {
-    text-decoration: none;
-}
-
-.a-yel {
-    background-color: #f9fc7e;
-    padding: 2px;
-}
-
-img {
-    padding: 2rem;
-    background-color: #ebebeb;
-    max-width: 85%;
+#main {
+    display: flex;
+    flex-direction: column-reverse;
 }
 
 #header {
+    background-color: rgba(255,255,255,0.8);
     overflow: hidden;
-}
-
-#main {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    width: 100vw;
 }
 
 .mt0 {
     margin-top: 0;
 }
 
-@media only screen and (min-width: 600px) {
-    .mr1 {
-        margin-right: 1rem;
-    }
-    
-    .mr2 {
-        margin-right: 2rem;
-    }
-    
-    .mr3 {
-        margin-right: 3rem;
-    }
-    
-    .mr4 {
-        margin-right: 4rem;
-    }
-    
-    .mr5 {
-        margin-right: 5rem;
-    }
-    
-    .mr6 {
-        margin-right: 6rem;
-    }
-    
-    .mr7 {
-        margin-right: 7rem;
-    }
-    
-    .mr8 {
-        margin-right: 8rem;
-    }
-    
-    .mr9 {
-        margin-right: 9rem;
-    }
-    
-    .mr10 {
-        margin-right: 10rem;
-    }
-    
-    .mr11 {
-        margin-right: 11rem;
-    }
+#header span {
+    margin-right: .7rem;
+}
+
+.a-yel {
+    background-color: #f9fc7e;
+    padding: 2px;
+    text-decoration: none;
+}
+
+#clients {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+#clients > div {
+    background-color: #ebebeb;
+    margin-bottom: 1rem;
+    max-width: 100%;
+    padding: 2rem;
+    text-align: center;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+#clients p {
+    margin: 0;
 }

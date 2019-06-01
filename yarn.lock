@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+lazysizes@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/lazysizes/-/lazysizes-5.1.0.tgz#a87d413aa3765dee03fcb2159f423ab84ed2f2e6"
+  integrity sha512-5NsKePWiWTTCXf3xKFaLOXE6eEX0Y1iWpxYAHnPRiv4JrDpUmgRnuDxeDeskw4hue9SgViXbAtEEvP9Jd8yZfQ==
+
 stickybits@^3.6.6:
   version "3.6.6"
   resolved "https://registry.yarnpkg.com/stickybits/-/stickybits-3.6.6.tgz#ce042cbeaecfcc84cda602be6f5bc99b63e2964c"

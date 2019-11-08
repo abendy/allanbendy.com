@@ -1,5 +1,45 @@
 {
+  "name": "allan-bendy-dotcom-static-web-site",
+  "version": "2019.0.1",
+  "description": "My portfolio web site.",
+  "scripts": {
+    "dev": "WP_ENV=development webpack",
+    "build": "WP_ENV=production webpack",
+    "clean": "rm -rf ./dist",
+    "test": "eslint './**/*.js' --fix && sass-lint"
+  },
+  "author": "Allan Bendy <allan.bendy@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:abendy/allanbendy.com.git"
+  },
+  "homepage": "https://allanbendy.com",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "babel-eslint": "^10.0.2",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.0.0",
+    "dotenv": "^8.0.0",
+    "dotenv-webpack": "^1.7.0",
+    "eslint": "5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-loader": "^2.1.2",
+    "eslint-plugin-import": "^2.18.2",
+    "mini-css-extract-plugin": "^0.7.0",
+    "node-sass": "^4.12.0",
+    "sass-lint": "^1.13.1",
+    "sass-loader": "^7.1.0",
+    "url-loader": "^2.2.0",
+    "webpack": "^4.35.0",
+    "webpack-cli": "^3.3.4",
+    "webpack-notifier": "^1.7.0",
+    "webpack-shell-plugin-next": "^1.0.1"
+  },
   "dependencies": {
+    "@babel/polyfill": "^7.4.4",
     "lazysizes": "^5.1.0",
     "stickybits": "^3.6.6"
   }

@@ -102,6 +102,13 @@ const development = {
     },
     plugins: [
         ...base.plugins,
+        new WebpackShellPlugin({
+            onBuildEnd: {
+                scripts: ['rsync -r --checksum --size-only src/images/. dist/images/'],
+                blocking: false,
+                parallel: true,
+            },
+        }),
     ],
 };
 

@@ -7,6 +7,7 @@ const WebpackNotifierPlugin = require('webpack-notifier');
 const CompressionPlugin = require('compression-webpack-plugin');
 const S3Plugin = require('webpack-s3-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 const { MODE = 'development' } = process.env;
 
@@ -106,6 +107,13 @@ const development = {
                 scripts: ['rsync -r --checksum --size-only src/images/. dist/images/'],
                 blocking: false,
                 parallel: true,
+            },
+        }),
+        new BrowserSyncPlugin({
+            host: 'localhost',
+            port: 3000,
+            server: {
+                baseDir: ['dist'],
             },
         }),
     ],

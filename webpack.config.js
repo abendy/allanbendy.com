@@ -84,7 +84,6 @@ const base = {
                 const extension = info.file.match(/[^.]+$/)[0];
                 return `${filename}.${extension}${info.query}`;
             },
-            deleteOriginalAssets: true,
         }),
     ],
     node: {

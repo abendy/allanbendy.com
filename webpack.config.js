@@ -4,6 +4,7 @@ const Dotenv = require('dotenv-webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WebpackShellPlugin = require('webpack-shell-plugin-next');
 const WebpackNotifierPlugin = require('webpack-notifier');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 const { WP_ENV = 'development' } = process.env;
 
@@ -83,7 +84,7 @@ const base = {
             },
         }),
         new MiniCssExtractPlugin({
-            filename: './[name].css',
+            filename: '[name].css',
         }),
         new webpack.LoaderOptionsPlugin({
             minimize: WP_ENV === 'production',
@@ -119,6 +120,19 @@ const production = {
         ...base.plugins,
         new WebpackNotifierPlugin({
             excludeWarnings: true
+        }),
+        new CompressionPlugin({
+            test: /\.(html|css|js)$/,
+            exclude: /node_modules/,
+            algorithm: 'gzip',
+            compressionOptions: { level: 9 },
+            // filename: '[path][query]',
+            filename(info) {
+                const filename = info.file.match(/^[^.]+/)[0];
+                const extension = info.file.match(/[^.]+$/)[0];
+                return `${filename}.gz.${extension}${info.query}`;
+            },
+            deleteOriginalAssets: true,
         }),
     ],
 };

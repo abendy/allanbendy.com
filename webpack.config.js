@@ -54,25 +54,6 @@ const base = {
             'css-loader?sourceMap',
             'sass-loader?sourceMap',
             ],
-        },
-        {
-            test: /\.(png|jp(e*)g|gif)$/,
-            exclude: /node_modules/,
-            use: [{
-                loader: 'url-loader',
-                options: {
-                    limit: 8000, // Convert images < 8kb to base64 strings
-                    name: '../images/[name].[ext]',
-                },
-            }],
-        },
-        {
-            test: /\.(woff|woff2|eot|ttf|svg)$/,
-            loader: 'url-loader',
-            options: {
-                limit: 1024,
-                name: '../fonts/[name].[ext]',
-            },
         }],
     },
     plugins: [

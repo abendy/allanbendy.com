@@ -23,12 +23,6 @@ const base = {
     },
     module: {
         rules: [{
-            test: /\.html$/,
-            use: {
-                loader: 'html-loader',
-            },
-        },
-        {
             enforce: 'pre',
             test: /\.js$/,
             exclude: /node_modules/,

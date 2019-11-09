@@ -21,58 +21,63 @@ const base = {
     },
     module: {
         rules: [{
-                enforce: 'pre',
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'eslint-loader',
-                options: {
-                    'no-debugger': WP_ENV === 'production' ? 2 : 0,
-                },
+            test: /\.html$/,
+            use: {
+                loader: 'html-loader',
             },
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'babel-loader',
-                options: {
-                    cacheDirectory: true,
-                    presets: [
-                        '@babel/preset-env',
-                    ],
-                },
+        },
+        {
+            enforce: 'pre',
+            test: /\.js$/,
+            exclude: /node_modules/,
+            loader: 'eslint-loader',
+            options: {
+                'no-debugger': MODE === 'production' ? 2 : 0,
             },
-            {
-                test: /\.(sa|sc|c)ss$/,
-                exclude: /node_modules/,
-                use: [{
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            hmr: WP_ENV === 'development',
-                        },
-                    },
-                    'css-loader?sourceMap',
-                    'sass-loader?sourceMap',
+        },
+        {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            loader: 'babel-loader',
+            options: {
+                cacheDirectory: true,
+                presets: [
+                    '@babel/preset-env',
                 ],
             },
-            {
-                test: /\.(png|jp(e*)g|gif)$/,
-                exclude: /node_modules/,
-                use: [{
-                    loader: 'url-loader',
-                    options: {
-                        limit: 8000, // Convert images < 8kb to base64 strings
-                        name: '../images/[name].[ext]',
-                    },
-                }],
+        },
+        {
+            test: /\.(sa|sc|c)ss$/,
+            exclude: /node_modules/,
+            use: [{
+                loader: MiniCssExtractPlugin.loader,
+                options: {
+                    hmr: MODE === 'development',
+                },
             },
-            {
-                test: /\.(woff|woff2|eot|ttf|svg)$/,
+            'css-loader?sourceMap',
+            'sass-loader?sourceMap',
+            ],
+        },
+        {
+            test: /\.(png|jp(e*)g|gif)$/,
+            exclude: /node_modules/,
+            use: [{
                 loader: 'url-loader',
                 options: {
-                    limit: 1024,
-                    name: '../fonts/[name].[ext]',
+                    limit: 8000, // Convert images < 8kb to base64 strings
+                    name: '../images/[name].[ext]',
                 },
-            }
-        ],
+            }],
+        },
+        {
+            test: /\.(woff|woff2|eot|ttf|svg)$/,
+            loader: 'url-loader',
+            options: {
+                limit: 1024,
+                name: '../fonts/[name].[ext]',
+            },
+        }],
     },
     plugins: [
         new Dotenv(),
@@ -82,6 +87,9 @@ const base = {
                 blocking: true,
                 parallel: false,
             },
+        }),
+        new WebpackNotifierPlugin({
+            excludeWarnings: true,
         }),
         new MiniCssExtractPlugin({
             filename: '[name].css',
@@ -118,9 +126,6 @@ const production = {
     },
     plugins: [
         ...base.plugins,
-        new WebpackNotifierPlugin({
-            excludeWarnings: true
-        }),
         new CompressionPlugin({
             test: /\.(html|css|js)$/,
             exclude: /node_modules/,

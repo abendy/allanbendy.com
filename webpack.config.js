@@ -123,7 +123,7 @@ const development = {
     ...base,
     mode: 'development',
     watch: true,
-    devtool: 'source-map',
+    devtool: 'none',
     module: {
         ...base.module,
     },

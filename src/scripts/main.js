@@ -1,5 +1,5 @@
 import 'lazysizes';
-import 'stickybits';
+import stickybits from 'stickybits';
 
 // eslint-disable-next-line no-undef
 stickybits('#header');

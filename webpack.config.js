@@ -131,10 +131,7 @@ const production = {
     plugins: [
         ...base.plugins,
         new CompressionPlugin({
-            test: /\.(html|css|js)$/,
-            exclude: [
-                /\.html$/,
-            ],
+            test: /\.(css|js)$/,
             algorithm: 'gzip',
             compressionOptions: { level: 9 },
             filename(info) {

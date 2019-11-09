@@ -39,7 +39,7 @@
     "webpack-cli": "^3.3.4",
     "webpack-notifier": "^1.7.0",
     "webpack-s3-plugin": "^1.0.3",
-    "webpack-shell-plugin-next": "^1.0.1"
+    "webpack-shell-plugin-next": "^1.1.1"
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.4",

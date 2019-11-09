@@ -6255,7 +6255,7 @@ webpack-s3-plugin@^1.0.3:
     progress "^2.0.0"
     recursive-readdir "^2.2.2"
 
-webpack-shell-plugin-next@^1.0.1:
+webpack-shell-plugin-next@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/webpack-shell-plugin-next/-/webpack-shell-plugin-next-1.1.1.tgz#0b58929c0348118ef8bccf4f0dd6912a90a32360"
   integrity sha512-5hwkRWw79RC4tqjnbmfdzAio5qAEcuBwAOXjCabpWVsYYlSgYsXBCqKotuQrBQKfgA2uSQcb6P5wtPzYK0AEkw==

@@ -102,6 +102,17 @@ const base = {
             },
             { from: './src/images', to: '../images' },
         ]),
+        new CompressionPlugin({
+            test: /\.(css|js)$/,
+            algorithm: 'gzip',
+            compressionOptions: { level: 9 },
+            filename(info) {
+                const filename = info.file.match(/^[^.]+/)[0];
+                const extension = info.file.match(/[^.]+$/)[0];
+                return `${filename}.${extension}${info.query}`;
+            },
+            deleteOriginalAssets: true,
+        }),
     ],
     node: {
         fs: 'empty', // avoids error messages
@@ -130,17 +141,6 @@ const production = {
     },
     plugins: [
         ...base.plugins,
-        new CompressionPlugin({
-            test: /\.(css|js)$/,
-            algorithm: 'gzip',
-            compressionOptions: { level: 9 },
-            filename(info) {
-                const filename = info.file.match(/^[^.]+/)[0];
-                const extension = info.file.match(/[^.]+$/)[0];
-                return `${filename}.${extension}${info.query}`;
-            },
-            deleteOriginalAssets: true,
-        }),
         new S3Plugin({
             s3Options: {
                 accessKeyId: process.env.accessKeyId,

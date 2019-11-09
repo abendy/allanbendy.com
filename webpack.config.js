@@ -58,13 +58,6 @@ const base = {
     },
     plugins: [
         new Dotenv(),
-        new WebpackShellPlugin({
-            onBuildStart: {
-                scripts: ['rm -f ./dist/**/*.*'],
-                blocking: true,
-                parallel: false,
-            },
-        }),
         new WebpackNotifierPlugin({
             excludeWarnings: true,
         }),
@@ -81,7 +74,6 @@ const base = {
                 to: '../',
                 flatten: true,
             },
-            { from: './src/images', to: '../images' },
         ]),
         new CompressionPlugin({
             test: /\.(css|js)$/,
@@ -122,6 +114,16 @@ const production = {
     },
     plugins: [
         ...base.plugins,
+        new WebpackShellPlugin({
+            onBuildStart: {
+                scripts: ['rm -f ./dist/**/*.*'],
+                blocking: true,
+                parallel: false,
+            },
+        }),
+        new CopyPlugin([
+            { from: './src/images', to: '../images' },
+        ]),
         new S3Plugin({
             s3Options: {
                 accessKeyId: process.env.accessKeyId,

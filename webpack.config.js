@@ -140,7 +140,7 @@ const production = {
             filename(info) {
                 const filename = info.file.match(/^[^.]+/)[0];
                 const extension = info.file.match(/[^.]+$/)[0];
-                return `${filename}.gz.${extension}${info.query}`;
+                return `${filename}.${extension}${info.query}`;
             },
             deleteOriginalAssets: true,
         }),
@@ -155,7 +155,7 @@ const production = {
                 // Here we set the Content-Encoding header for all the gzipped files to 'gzip'
                 // eslint-disable-next-line consistent-return
                 ContentEncoding(fileName) {
-                    if (/\.gz\.(css|js)$/.test(fileName)) {
+                    if (/\.(css|js)$/.test(fileName)) {
                         return 'gzip';
                     }
                 },

@@ -6,7 +6,7 @@ const WebpackShellPlugin = require('webpack-shell-plugin-next');
 const WebpackNotifierPlugin = require('webpack-notifier');
 const CompressionPlugin = require('compression-webpack-plugin');
 
-const { WP_ENV = 'development' } = process.env;
+const { MODE = 'development' } = process.env;
 
 const base = {
     entry: {
@@ -87,8 +87,8 @@ const base = {
             filename: '[name].css',
         }),
         new webpack.LoaderOptionsPlugin({
-            minimize: WP_ENV === 'production',
-            debug: WP_ENV !== 'production',
+            minimize: MODE === 'production',
+            debug: MODE !== 'production',
         }),
     ],
     node: {
@@ -137,4 +137,4 @@ const production = {
     ],
 };
 
-module.exports = (WP_ENV === 'development' ? development : production);
+module.exports = (MODE === 'development' ? development : production);

@@ -3,8 +3,9 @@
   "version": "2019.0.1",
   "description": "My portfolio web site.",
   "scripts": {
-    "dev": "WP_ENV=development webpack",
-    "build": "WP_ENV=production webpack",
+    "dev": "MODE=development webpack",
+    "build": "MODE=production webpack",
+    "deploy": "MODE=deploy webpack",
     "clean": "rm -rf ./dist",
     "test": "eslint './**/*.js' --fix && sass-lint"
   },

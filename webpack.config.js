@@ -5,6 +5,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WebpackShellPlugin = require('webpack-shell-plugin-next');
 const WebpackNotifierPlugin = require('webpack-notifier');
 const CompressionPlugin = require('compression-webpack-plugin');
+const S3Plugin = require('webpack-s3-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const { MODE = 'development' } = process.env;
 
@@ -16,7 +18,7 @@ const base = {
         ],
     },
     output: {
-        path: path.join(__dirname, './dist/'),
+        path: path.join(__dirname, './dist/assets/'),
         filename: '[name].js',
     },
     module: {
@@ -98,6 +100,14 @@ const base = {
             minimize: MODE === 'production',
             debug: MODE !== 'production',
         }),
+        new CopyPlugin([
+            {
+                from: './src/html/**/*.*',
+                to: '../',
+                flatten: true,
+            },
+            { from: './src/images', to: '../images' },
+        ]),
     ],
     node: {
         fs: 'empty', // avoids error messages
@@ -128,16 +138,47 @@ const production = {
         ...base.plugins,
         new CompressionPlugin({
             test: /\.(html|css|js)$/,
-            exclude: /node_modules/,
+            exclude: [
+                /\.html$/,
+            ],
             algorithm: 'gzip',
             compressionOptions: { level: 9 },
-            // filename: '[path][query]',
             filename(info) {
                 const filename = info.file.match(/^[^.]+/)[0];
                 const extension = info.file.match(/[^.]+$/)[0];
                 return `${filename}.gz.${extension}${info.query}`;
             },
             deleteOriginalAssets: true,
+        }),
+        new S3Plugin({
+            s3Options: {
+                accessKeyId: process.env.accessKeyId,
+                secretAccessKey: process.env.secretAccessKey,
+                region: process.env.region,
+            },
+            s3UploadOptions: {
+                Bucket: process.env.bucket,
+                // Here we set the Content-Encoding header for all the gzipped files to 'gzip'
+                // eslint-disable-next-line consistent-return
+                ContentEncoding(fileName) {
+                    if (/\.gz\.(css|js)$/.test(fileName)) {
+                        return 'gzip';
+                    }
+                },
+                // Here we set the Content-Type header
+                // for the gzipped files to their appropriate values
+                // so the browser can interpret them properly
+                // eslint-disable-next-line consistent-return
+                ContentType(fileName) {
+                    if (/\.css/.test(fileName)) {
+                        return 'text/css';
+                    }
+                    if (/\.js/.test(fileName)) {
+                        return 'text/javascript';
+                    }
+                },
+            },
+            directory: './dist/', // This is the directory you want to upload
         }),
     ],
 };

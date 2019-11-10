@@ -8,6 +8,7 @@ const CompressionPlugin = require('compression-webpack-plugin');
 const S3Plugin = require('webpack-s3-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const { MODE = 'development' } = process.env;
 
@@ -24,6 +25,10 @@ const base = {
     },
     module: {
         rules: [{
+            test: /\.pug$/,
+            loader: 'pug-loader',
+        },
+        {
             enforce: 'pre',
             test: /\.js$/,
             exclude: /node_modules/,
@@ -69,11 +74,16 @@ const base = {
             minimize: MODE === 'production',
             debug: MODE !== 'production',
         }),
+        new HtmlWebpackPlugin({
+            template: './src/html/index.pug',
+            filename: '../index.html',
+        }),
         new CopyPlugin([
             {
-                from: './src/html/**/*.*',
+                from: './src/html/**/*',
                 to: '../',
                 flatten: true,
+                ignore: ['*.pug'],
             },
         ]),
         new CompressionPlugin({

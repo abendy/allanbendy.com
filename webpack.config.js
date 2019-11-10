@@ -7,6 +7,8 @@ const WebpackNotifierPlugin = require('webpack-notifier');
 const CompressionPlugin = require('compression-webpack-plugin');
 const S3Plugin = require('webpack-s3-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const { MODE = 'development' } = process.env;
 
@@ -23,6 +25,10 @@ const base = {
     },
     module: {
         rules: [{
+            test: /\.pug$/,
+            loader: 'pug-loader',
+        },
+        {
             enforce: 'pre',
             test: /\.js$/,
             exclude: /node_modules/,
@@ -51,39 +57,13 @@ const base = {
                     hmr: MODE === 'development',
                 },
             },
-            'css-loader?sourceMap',
-            'sass-loader?sourceMap',
+            'css-loader',
+            'sass-loader',
             ],
-        },
-        {
-            test: /\.(png|jp(e*)g|gif)$/,
-            exclude: /node_modules/,
-            use: [{
-                loader: 'url-loader',
-                options: {
-                    limit: 8000, // Convert images < 8kb to base64 strings
-                    name: '../images/[name].[ext]',
-                },
-            }],
-        },
-        {
-            test: /\.(woff|woff2|eot|ttf|svg)$/,
-            loader: 'url-loader',
-            options: {
-                limit: 1024,
-                name: '../fonts/[name].[ext]',
-            },
         }],
     },
     plugins: [
         new Dotenv(),
-        new WebpackShellPlugin({
-            onBuildStart: {
-                scripts: ['rm -f ./dist/**/*.*'],
-                blocking: true,
-                parallel: false,
-            },
-        }),
         new WebpackNotifierPlugin({
             excludeWarnings: true,
         }),
@@ -94,13 +74,17 @@ const base = {
             minimize: MODE === 'production',
             debug: MODE !== 'production',
         }),
+        new HtmlWebpackPlugin({
+            template: './src/html/index.pug',
+            filename: '../index.html',
+        }),
         new CopyPlugin([
             {
-                from: './src/html/**/*.*',
+                from: './src/html/**/*',
                 to: '../',
                 flatten: true,
+                ignore: ['*.pug'],
             },
-            { from: './src/images', to: '../images' },
         ]),
     ],
     node: {
@@ -112,12 +96,26 @@ const development = {
     ...base,
     mode: 'development',
     watch: true,
-    devtool: 'source-map',
+    devtool: 'none',
     module: {
         ...base.module,
     },
     plugins: [
         ...base.plugins,
+        new WebpackShellPlugin({
+            onBuildEnd: {
+                scripts: ['rsync -r --checksum --size-only src/images/. dist/images/'],
+                blocking: false,
+                parallel: true,
+            },
+        }),
+        new BrowserSyncPlugin({
+            host: 'localhost',
+            port: 3000,
+            server: {
+                baseDir: ['dist'],
+            },
+        }),
     ],
 };
 
@@ -130,20 +128,26 @@ const production = {
     },
     plugins: [
         ...base.plugins,
+        new WebpackShellPlugin({
+            onBuildStart: {
+                scripts: ['rm -f ./dist/**/*.*'],
+                blocking: true,
+                parallel: false,
+            },
+        }),
         new CompressionPlugin({
-            test: /\.(html|css|js)$/,
-            exclude: [
-                /\.html$/,
-            ],
+            test: /\.(css|js)$/,
             algorithm: 'gzip',
             compressionOptions: { level: 9 },
             filename(info) {
                 const filename = info.file.match(/^[^.]+/)[0];
                 const extension = info.file.match(/[^.]+$/)[0];
-                return `${filename}.gz.${extension}${info.query}`;
+                return `${filename}.${extension}${info.query}`;
             },
-            deleteOriginalAssets: true,
         }),
+        new CopyPlugin([
+            { from: './src/images', to: '../images' },
+        ]),
         new S3Plugin({
             s3Options: {
                 accessKeyId: process.env.accessKeyId,
@@ -155,7 +159,7 @@ const production = {
                 // Here we set the Content-Encoding header for all the gzipped files to 'gzip'
                 // eslint-disable-next-line consistent-return
                 ContentEncoding(fileName) {
-                    if (/\.gz\.(css|js)$/.test(fileName)) {
+                    if (/\.(css|js)$/.test(fileName)) {
                         return 'gzip';
                     }
                 },

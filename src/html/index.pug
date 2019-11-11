@@ -24,6 +24,8 @@ head
 #clients
     include ./clients.pug
 
-p#copyright &copy; new Date().getFullYear()
+p#copyright &copy;
+script.
+    document.write(new Date().getFullYear())
 
 script(src='assets/main.js')

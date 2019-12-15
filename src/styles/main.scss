@@ -38,10 +38,28 @@ a {
     background-color: rgba(255,255,255,0.4);
     float: left;
     overflow: hidden;
+
+    &.js-is-sticky {
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 .mt0 {
     margin-top: 0;
+
+    .js-is-sticky & {
+        display: flex;
+        flex-direction: column;
+
+        & > *:first-child {
+            margin-bottom: .9rem;
+        }
+
+        & > *:not(:first-child) {
+            margin-bottom: .3rem;
+        }
+    }
 }
 
 #header span {

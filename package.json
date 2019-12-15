@@ -6,7 +6,8 @@
     "dev": "MODE=development webpack",
     "build": "MODE=production webpack",
     "clean": "rm -rf ./dist",
-    "test": "eslint './**/*.js' --fix && sass-lint"
+    "lint": "eslint './**/*.js' && sass-lint",
+    "flow": "flow"
   },
   "author": "Allan Bendy <allan.bendy@gmail.com>",
   "repository": {

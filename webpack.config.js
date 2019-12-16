@@ -77,6 +77,7 @@ const base = {
         new HtmlWebpackPlugin({
             template: './src/html/index.pug',
             filename: '../index.html',
+            inject: false,
         }),
         new CopyPlugin([
             {

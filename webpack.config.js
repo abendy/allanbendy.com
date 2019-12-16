@@ -65,7 +65,8 @@ const base = {
     plugins: [
         new Dotenv(),
         new WebpackNotifierPlugin({
-            excludeWarnings: true,
+            alwaysNotify: true,
+            excludeWarnings: false,
         }),
         new MiniCssExtractPlugin({
             filename: '[name].css',

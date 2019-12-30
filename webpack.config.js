@@ -23,6 +23,11 @@ const base = {
         path: path.join(__dirname, './dist/assets/'),
         filename: '[name].js',
     },
+    optimization: {
+        splitChunks: {
+            chunks: 'all',
+        },
+    },
     module: {
         rules: [{
             test: /\.pug$/,

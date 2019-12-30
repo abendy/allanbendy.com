@@ -88,16 +88,6 @@ const base = {
                 ignore: ['*.pug'],
             },
         ]),
-        new CompressionPlugin({
-            test: /\.(css|js)$/,
-            algorithm: 'gzip',
-            compressionOptions: { level: 9 },
-            filename(info) {
-                const filename = info.file.match(/^[^.]+/)[0];
-                const extension = info.file.match(/[^.]+$/)[0];
-                return `${filename}.${extension}${info.query}`;
-            },
-        }),
     ],
     node: {
         fs: 'empty', // avoids error messages
@@ -150,6 +140,16 @@ const production = {
         new CopyPlugin([
             { from: './src/images', to: '../images' },
         ]),
+        new CompressionPlugin({
+            test: /\.(css|js)$/,
+            algorithm: 'gzip',
+            compressionOptions: { level: 9 },
+            filename(info) {
+                const filename = info.file.match(/^[^.]+/)[0];
+                const extension = info.file.match(/[^.]+$/)[0];
+                return `${filename}.${extension}${info.query}`;
+            },
+        }),
         new S3Plugin({
             s3Options: {
                 accessKeyId: process.env.accessKeyId,

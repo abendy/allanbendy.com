@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
-const Dotenv = require('dotenv-webpack');
+require('dotenv').config({ path: path.resolve(__dirname, './.env') });
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WebpackShellPlugin = require('webpack-shell-plugin-next');
 const WebpackNotifierPlugin = require('webpack-notifier');
@@ -68,7 +68,6 @@ const base = {
         }],
     },
     plugins: [
-        new Dotenv(),
         new WebpackNotifierPlugin({
             alwaysNotify: true,
             excludeWarnings: false,
@@ -161,7 +160,7 @@ const production = {
                 region: process.env.region,
             },
             s3UploadOptions: {
-                Bucket: process.env.bucket,
+                Bucket: process.env.s3Bucket,
                 // Here we set the Content-Encoding header for all the gzipped files to 'gzip'
                 // eslint-disable-next-line consistent-return
                 ContentEncoding(fileName) {

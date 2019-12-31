@@ -1,47 +1,38 @@
 doctype html
 
 head
-  meta(charset='utf-8')
-  meta(name='viewport' content='width=device-width, initial-scale=1')
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
 
-  title A portfolio
+    title A portfolio
 
-  meta(name='description' content='A builder and executor of commercial and open source web projects and advisor at the intersection of technology and business development.')
-  meta(name='keywords' content='Technical Lead, Senior Developer, DevOps, Business Development, User Experience, ES6 JavaScript, React, Vue.js, PHP, Symfony, Python, Django, Docker, Serverless, Microservices, Node.js, TypeScript, Git, GitHub, PostgreSQL, MySQL, AWS, Google Cloud, BitBucket, SASS / CSS, HTML, Bootstrap, WordPress CMS, Drupal CMS, Sketch, Adobe Creative')
+    meta(name='description' content='A builder and executor of commercial and open source web projects and advisor at the intersection of technology and business development.')
+    meta(name='keywords' content='Technical Lead, Senior Developer, DevOps, Business Development, User Experience, ES6 JavaScript, React, Vue.js, PHP, Symfony, Python, Django, Docker, Serverless, Microservices, Node.js, TypeScript, Git, GitHub, PostgreSQL, MySQL, AWS, Google Cloud, BitBucket, SASS / CSS, HTML, Bootstrap, WordPress CMS, Drupal CMS, Sketch, Adobe Creative')
 
-  link(rel='shortcut icon' href='images/1-pixel-white.png' type='image/x-icon')
+    link(rel='shortcut icon' href='images/1-pixel-white.png' type='image/x-icon')
 
-  link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Montserrat:300&display=swap' type='text/css')
-  link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Spectral:600&display=swap' type='text/css')
-  link(rel='stylesheet' href='assets/main.css' type='text/css')
+    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Montserrat:300&display=swap' type='text/css')
+    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Spectral:600&display=swap' type='text/css')
+    link(rel='stylesheet' href='assets/main.css' type='text/css')
 
 #copy
-  p Dear reader,
-  p
-    | These are years of dissolution and collapse, reinvention and transformation, of creative and commercial spheres spinning in alien ways.
-  p
-    | Amidst this excitement and surrounded by the discordance of an endless supply of information, together we may issue a clarion call through the din and speak for ideas that necessitate their own existence via their own originality and integrity.
-  p
-    | I believe in clarity of voice in the most uncompromising manner possible. And with that voice, and a lifetime of curious observation and obsessive self-engagement, create experiences that shift the world and have lasting and impactful digital footprints.
-  p
-    | I am a builder and executor of commercial and open source web projects and advisor at the intersection of technology and business development.
-  p
-    | In closing, I engage the best of the past, present, and future in collaboration and open conversation, and I sincerely look forward to speaking with you.
+    include ./copy.pug
 
 #header
-  h1 Allan T. Bendy
-  p.mt0
-    span(title='Where I live') New York City
-    span
-      a.a-yel(href="javascript:location='mailto:\u0061\u006c\u006c\u0061\u006e\u002e\u0062\u0065\u006e\u0064\u0079\u0040\u0067\u006d\u0061\u0069\u006c\u002e\u0063\u006f\u006d';void 0" title='Say hi')
-        script(type='text/javascript').
-          document.write('\\u0061\u006c\u006c\u0061\u006e\u002e\u0062\u0065\u006e\u0064\u0079\u0040\u0067\u006d\u0061\u0069\u006c\u002e\u0063\u006f\u006d')
-    span
-      a.a-yel(href='http://publicfiles.allanbendy.com/Allan_T._Bendy_Resume.pdf' title="What I've done") Resume
+    include ./header.pug
 
 #clients
     include ./clients.pug
 
-p#copyright &copy; new Date().getFullYear()
+p#copyright &copy;
 
+script(src='assets/vendors~main.js')
 script(src='assets/main.js')
+
+- var tracking_id = 'UA-20623758-1'
+script(async, src='https://www.googletagmanager.com/gtag/js?id=' + tracking_id)
+script.
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '#{tracking_id}');

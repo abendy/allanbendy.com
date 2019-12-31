@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
-const Dotenv = require('dotenv-webpack');
+require('dotenv').config({ path: path.resolve(__dirname, './.env') });
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WebpackShellPlugin = require('webpack-shell-plugin-next');
 const WebpackNotifierPlugin = require('webpack-notifier');
@@ -22,6 +22,11 @@ const base = {
     output: {
         path: path.join(__dirname, './dist/assets/'),
         filename: '[name].js',
+    },
+    optimization: {
+        splitChunks: {
+            chunks: 'all',
+        },
     },
     module: {
         rules: [{
@@ -63,9 +68,9 @@ const base = {
         }],
     },
     plugins: [
-        new Dotenv(),
         new WebpackNotifierPlugin({
-            excludeWarnings: true,
+            alwaysNotify: true,
+            excludeWarnings: false,
         }),
         new MiniCssExtractPlugin({
             filename: '[name].css',
@@ -77,6 +82,7 @@ const base = {
         new HtmlWebpackPlugin({
             template: './src/html/index.pug',
             filename: '../index.html',
+            inject: false,
         }),
         new CopyPlugin([
             {
@@ -129,12 +135,14 @@ const production = {
     plugins: [
         ...base.plugins,
         new WebpackShellPlugin({
-            onBuildStart: {
+            onBeforeBuild: {
                 scripts: ['rm -f ./dist/**/*.*'],
                 blocking: true,
-                parallel: false,
             },
         }),
+        new CopyPlugin([
+            { from: './src/images', to: '../images' },
+        ]),
         new CompressionPlugin({
             test: /\.(css|js)$/,
             algorithm: 'gzip',
@@ -145,9 +153,6 @@ const production = {
                 return `${filename}.${extension}${info.query}`;
             },
         }),
-        new CopyPlugin([
-            { from: './src/images', to: '../images' },
-        ]),
         new S3Plugin({
             s3Options: {
                 accessKeyId: process.env.accessKeyId,
@@ -155,7 +160,7 @@ const production = {
                 region: process.env.region,
             },
             s3UploadOptions: {
-                Bucket: process.env.bucket,
+                Bucket: process.env.s3Bucket,
                 // Here we set the Content-Encoding header for all the gzipped files to 'gzip'
                 // eslint-disable-next-line consistent-return
                 ContentEncoding(fileName) {

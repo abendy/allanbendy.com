@@ -136,10 +136,9 @@ const production = {
     plugins: [
         ...base.plugins,
         new WebpackShellPlugin({
-            onBuildStart: {
+            onBeforeBuild: {
                 scripts: ['rm -f ./dist/**/*.*'],
                 blocking: true,
-                parallel: false,
             },
         }),
         new CopyPlugin([

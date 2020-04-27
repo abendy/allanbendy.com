@@ -1,0 +1,19 @@
+// Base
+
+body {
+  -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+     -moz-animation: fadein 2s; /* Firefox < 16 */
+      -ms-animation: fadein 2s; /* Internet Explorer */
+       -o-animation: fadein 2s; /* Opera < 12.1 */
+          animation: fadein 2s;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  padding-right: 3rem;
+  padding-left: 1rem;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}

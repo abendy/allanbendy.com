@@ -4,12 +4,12 @@ body {
   animation: fadein 2s;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  padding-top: 1rem;
   padding-left: 3rem;
   text-rendering: optimizeLegibility;
 
   @media (max-width: 600px) {
     padding-right: 1rem;
-    padding-bottom: 4rem;
     padding-left: 1rem;
   }
 }

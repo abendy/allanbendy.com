@@ -1,22 +1,35 @@
 // Info
 
+@mixin mobileStack {
+  display: flex;
+  flex-direction: column;
+
+  & > *:first-child {
+    margin-bottom: .9rem;
+  }
+
+  & > *:not(:first-child) {
+    margin-bottom: .3rem;
+  }
+}
+
 #info {
   margin-top: 0;
 
   .js-is-sticky--change & {
-    display: flex;
-    flex-direction: column;
+    @include mobileStack;
+  }
 
-    & > *:first-child {
-      margin-bottom: .9rem;
-    }
+  @media (max-width: 600px) {
+    @include mobileStack;
+  }
 
-    & > *:not(:first-child) {
-      margin-bottom: .3rem;
+  & > * {
+    align-self: flex-start;
+    padding: 2px;
+
+    &:not(:last-child) {
+      margin-right: 1.4rem;
     }
   }
-}
-
-#info span {
-  margin-right: .7rem;
 }

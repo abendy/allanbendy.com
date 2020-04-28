@@ -1,0 +1,26 @@
+// Clients
+
+#clients {
+  align-items: center;
+  clear: left;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  padding-top: 5rem;
+
+  .js-is-sticky--change + & {
+      clear: both;
+  }
+
+  & > div {
+    background-color: #ebebeb;
+    margin-bottom: 3.5rem;
+    max-width: 100%;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  p {
+    margin: 0;
+  }
+}

@@ -1,0 +1,22 @@
+// Info
+
+#info {
+  margin-top: 0;
+
+  .js-is-sticky--change & {
+    display: flex;
+    flex-direction: column;
+
+    & > *:first-child {
+      margin-bottom: .9rem;
+    }
+
+    & > *:not(:first-child) {
+      margin-bottom: .3rem;
+    }
+  }
+}
+
+#info span {
+  margin-right: .7rem;
+}

@@ -206,6 +206,10 @@ const production = {
         },
       },
       directory: './dist/', // This is the directory you want to upload
+      cloudfrontInvalidateOptions: {
+        DistributionId: cloudFrontId,
+        Items: ['/*'],
+      },
     }),
   ],
 };

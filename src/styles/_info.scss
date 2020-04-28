@@ -15,8 +15,10 @@
       margin-bottom: .3rem;
     }
   }
-}
 
-#info span {
-  margin-right: .7rem;
+  span {
+    &:not(:last-child) {
+      margin-right: 1.4rem;
+    }
+  }
 }

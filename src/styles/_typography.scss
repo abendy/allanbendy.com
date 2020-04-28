@@ -2,21 +2,18 @@
 
 .highlight {
   background-color: #f9fc7e;
-  padding: 2px;
   text-decoration: none;
 }
 
 h1 {
   color: #000;
   font-family: 'Spectral', serif;
-  font-size: 1.75rem;
-  margin-top: .5rem;
-  margin-bottom: 0;
   text-transform: uppercase;
   white-space: nowrap;
 }
 
 p,
+span,
 a {
   color: #000;
   font-family: 'Montserrat', sans-serif;

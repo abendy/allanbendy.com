@@ -14,6 +14,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const {
   MODE = 'development',
+  DEPLOY,
   accessKeyId,
   secretAccessKey,
   region,
@@ -149,9 +150,47 @@ const development = {
   ],
 };
 
+const deploy = [
+  new S3Plugin({
+    s3Options: {
+      accessKeyId: accessKeyId,
+      secretAccessKey: secretAccessKey,
+      region: region,
+    },
+    s3UploadOptions: {
+      Bucket: s3Bucket,
+      // Here we set the Content-Encoding header for all the gzipped files to 'gzip'
+      // eslint-disable-next-line consistent-return
+      ContentEncoding(fileName) {
+        if (/\.(css|js)$/.test(fileName)) {
+          return 'gzip';
+        }
+      },
+      // Here we set the Content-Type header
+      // for the gzipped files to their appropriate values
+      // so the browser can interpret them properly
+      // eslint-disable-next-line consistent-return
+      ContentType(fileName) {
+        if (/\.css/.test(fileName)) {
+          return 'text/css';
+        }
+        if (/\.js/.test(fileName)) {
+          return 'text/javascript';
+        }
+      },
+    },
+    directory: './dist/', // This is the directory you want to upload
+    cloudfrontInvalidateOptions: {
+      DistributionId: cloudFrontId,
+      Items: ['/*'],
+    },
+  }),
+];
+
 const production = {
   ...base,
   mode: 'production',
+  watch: false,
   devtool: false,
   module: {
     ...base.module,
@@ -177,40 +216,7 @@ const production = {
         return `${filename}.${extension}${info.query}`;
       },
     }),
-    new S3Plugin({
-      s3Options: {
-        accessKeyId: accessKeyId,
-        secretAccessKey: secretAccessKey,
-        region: region,
-      },
-      s3UploadOptions: {
-        Bucket: s3Bucket,
-        // Here we set the Content-Encoding header for all the gzipped files to 'gzip'
-        // eslint-disable-next-line consistent-return
-        ContentEncoding(fileName) {
-          if (/\.(css|js)$/.test(fileName)) {
-            return 'gzip';
-          }
-        },
-        // Here we set the Content-Type header
-        // for the gzipped files to their appropriate values
-        // so the browser can interpret them properly
-        // eslint-disable-next-line consistent-return
-        ContentType(fileName) {
-          if (/\.css/.test(fileName)) {
-            return 'text/css';
-          }
-          if (/\.js/.test(fileName)) {
-            return 'text/javascript';
-          }
-        },
-      },
-      directory: './dist/', // This is the directory you want to upload
-      cloudfrontInvalidateOptions: {
-        DistributionId: cloudFrontId,
-        Items: ['/*'],
-      },
-    }),
+    ...(DEPLOY) && deploy,
   ],
 };
 

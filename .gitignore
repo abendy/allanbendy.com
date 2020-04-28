@@ -1,5 +1,7 @@
 .env
 dist/
 node_modules/
+/private/*
+!/private/.gitkeep
 credentials.csv
 yarn-error.log

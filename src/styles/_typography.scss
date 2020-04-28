@@ -2,7 +2,6 @@
 
 .highlight {
   background-color: #f9fc7e;
-  text-decoration: none;
 }
 
 h1 {
@@ -17,13 +16,14 @@ span,
 a {
   color: #000;
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.15rem;
-  line-height: 1.7;
+}
+
+a {
+  text-decoration: none;
 }
 
 blockquote {
   color: #333;
   font-family: 'Spectral', serif;
-  font-size: 1.35rem;
   margin-bottom: 2rem;
 }

@@ -14,9 +14,15 @@
     & > *:not(:first-child) {
       margin-bottom: .3rem;
     }
+
+    & > * {
+      align-self: flex-start;
+    }
   }
 
-  span {
+  & > * {
+    padding: 2px;
+
     &:not(:last-child) {
       margin-right: 1.4rem;
     }

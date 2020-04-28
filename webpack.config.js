@@ -3,6 +3,7 @@ const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, './.env') });
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WebpackShellPlugin = require('webpack-shell-plugin-next');
+const autoprefixer = require('autoprefixer');
 const WebpackNotifierPlugin = require('webpack-notifier');
 const CompressionPlugin = require('compression-webpack-plugin');
 const S3Plugin = require('webpack-s3-plugin');
@@ -88,6 +89,7 @@ const base = {
         },
         'css-loader',
         'sass-loader',
+        'postcss-loader',
       ],
     }],
   },
@@ -102,6 +104,11 @@ const base = {
     new webpack.LoaderOptionsPlugin({
       minimize: MODE === 'production',
       debug: MODE !== 'production',
+      options: {
+        postcss: [
+          autoprefixer(),
+        ],
+      },
     }),
     new HtmlWebpackPlugin({
       template: './src/html/index.pug',

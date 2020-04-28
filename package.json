@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "MODE=development webpack",
     "build": "rm -rf ./dist/* && MODE=production webpack",
+    "deploy": "rm -rf ./dist/* && MODE=production DEPLOY=1 webpack",
     "clean": "rm -rf ./dist/*",
     "lint": "eslint './**/*.js' && sass-lint",
     "flow": "flow"

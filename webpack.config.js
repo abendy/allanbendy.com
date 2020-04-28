@@ -12,7 +12,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
-const { MODE = 'development' } = process.env;
+const {
+  MODE = 'development',
+  accessKeyId,
+  secretAccessKey,
+  region,
+  s3Bucket,
+  cloudFrontId,
+} = process.env;
 
 const base = {
   entry: {
@@ -171,12 +178,12 @@ const production = {
     }),
     new S3Plugin({
       s3Options: {
-        accessKeyId: process.env.accessKeyId,
-        secretAccessKey: process.env.secretAccessKey,
-        region: process.env.region,
+        accessKeyId: accessKeyId,
+        secretAccessKey: secretAccessKey,
+        region: region,
       },
       s3UploadOptions: {
-        Bucket: process.env.s3Bucket,
+        Bucket: s3Bucket,
         // Here we set the Content-Encoding header for all the gzipped files to 'gzip'
         // eslint-disable-next-line consistent-return
         ContentEncoding(fileName) {

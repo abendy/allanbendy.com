@@ -78,14 +78,15 @@ const base = {
     {
       test: /\.(sa|sc|c)ss$/,
       exclude: /node_modules/,
-      use: [{
-        loader: MiniCssExtractPlugin.loader,
-        options: {
-          hmr: MODE === 'development',
+      use: [
+        {
+          loader: MiniCssExtractPlugin.loader,
+          options: {
+            hmr: MODE === 'development', // true in development MODE
+          },
         },
-      },
-      'css-loader',
-      'sass-loader',
+        'css-loader',
+        'sass-loader',
       ],
     }],
   },

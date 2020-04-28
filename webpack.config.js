@@ -1,17 +1,17 @@
 const webpack = require('webpack');
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, './.env') });
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const WebpackShellPlugin = require('webpack-shell-plugin-next');
-const autoprefixer = require('autoprefixer');
-const WebpackNotifierPlugin = require('webpack-notifier');
-const CompressionPlugin = require('compression-webpack-plugin');
-const S3Plugin = require('webpack-s3-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const autoprefixer = require('autoprefixer');
+const WebpackNotifierPlugin = require('webpack-notifier');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+const WebpackShellPlugin = require('webpack-shell-plugin-next');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const S3Plugin = require('webpack-s3-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 const {
   MODE = 'development',

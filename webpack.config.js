@@ -9,6 +9,8 @@ const S3Plugin = require('webpack-s3-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TerserJSPlugin = require('terser-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const { MODE = 'development' } = process.env;
 
@@ -27,11 +29,24 @@ const base = {
         splitChunks: {
             chunks: 'all',
         },
+        minimize: MODE === 'production',
+        minimizer: [
+            new TerserJSPlugin({
+                test: /\.js$/,
+                exclude: /node_modules/,
+                sourceMap: MODE !== 'production',
+                extractComments: true,
+            }),
+            new OptimizeCSSAssetsPlugin({}),
+        ],
     },
     module: {
         rules: [{
             test: /\.pug$/,
             loader: 'pug-loader',
+            options: {
+                pretty: MODE !== 'production',
+            },
         },
         {
             enforce: 'pre',
@@ -83,6 +98,7 @@ const base = {
             template: './src/html/index.pug',
             filename: '../index.html',
             inject: false,
+            minify: MODE === 'production',
         }),
         new CopyPlugin([
             {
@@ -102,7 +118,7 @@ const development = {
     ...base,
     mode: 'development',
     watch: true,
-    devtool: 'none',
+    devtool: 'source-map',
     module: {
         ...base.module,
     },

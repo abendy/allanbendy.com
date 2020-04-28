@@ -4,8 +4,8 @@
   "description": "My portfolio web site.",
   "scripts": {
     "dev": "MODE=development webpack",
-    "build": "MODE=production webpack",
-    "clean": "rm -rf ./dist",
+    "build": "rm -rf ./dist/* && MODE=production webpack",
+    "clean": "rm -rf ./dist/*",
     "lint": "eslint './**/*.js' && sass-lint",
     "flow": "flow"
   },

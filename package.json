@@ -54,7 +54,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
-    "lazysizes": "^5.1.0",
+    "lazysizes": "^5.2.1",
     "stickybits": "^3.6.6"
   }
 }
